@@ -45,5 +45,12 @@
             <version>2.13.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.microsoft.playwright/playwright -->
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>1.52.0</version>
+        </dependency>
+
     </dependencies>
 </project>
