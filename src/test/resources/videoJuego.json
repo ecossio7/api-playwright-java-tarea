@@ -1,0 +1,24 @@
+{
+  "nombre": "json-Practical Steel Table",
+  "epoca": 2024,
+  "precio": 933.65,
+  "duracion": 7,
+  "genero": "sensor",
+  "empresa": {
+    "nombre": "Oberbrunner - Collier",
+    "paginaWeb": "http://turner.info",
+    "mision": "Accountability",
+    "direccion": {
+      "direccion": "5766 Rahsaan Hollow",
+      "ciudad": "Saudi Arabia",
+      "estado": "North Carolina",
+      "pais": "New Lane",
+      "continente": "North America",
+      "codigoPostal": "68268-3939",
+      "coordenadas": {
+        "latitud": -72.1598,
+        "longitud": -169.0757
+      }
+    }
+  }
+}

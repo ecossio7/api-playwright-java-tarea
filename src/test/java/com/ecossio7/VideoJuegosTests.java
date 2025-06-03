@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import requests.VideoJuegoRequests;
 import utilities.BaseTest;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class VideoJuegosTests extends BaseTest {
     private VideoJuegoRequests videoJuegoRequests;
 
@@ -94,33 +98,8 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
-    void updateVideoJuegoTest() {
-        final var body = """
-                {
-                     "nombre": "update-blass",
-                     "epoca": 2024,
-                     "precio": 31.3,
-                     "duracion": 7,
-                     "genero": "update-terror",
-                     "empresa": {
-                         "nombre": "update",
-                         "paginaWeb": "https://afraid-summer.net",
-                         "mision": "update-Immersive intermediate utilisation",
-                         "direccion": {
-                             "direccion": "update-22257 W Pine Street",
-                             "ciudad": "update-Carmichael",
-                             "estado": "update-North Carolina",
-                             "pais": "update-Malaysia",
-                             "continente": "update-North America",
-                             "codigoPostal": "68268-3939",
-                             "coordenadas": {
-                                 "latitud": 110.94,
-                                 "longitud": 84.64
-                             }
-                         }
-                     }
-                 }
-                """;
+    void updateVideoJuegoTest() throws IOException {
+        final var body = Files.readAllBytes(Paths.get("src/test/resources/videoJuego.json"));
         requestOptions.setData(body);
         apiResponse = videoJuegoRequests.update(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
