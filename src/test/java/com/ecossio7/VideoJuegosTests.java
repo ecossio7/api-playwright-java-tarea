@@ -17,7 +17,8 @@ public class VideoJuegosTests extends BaseTest {
     private VideoJuegoRequests videoJuegoRequests;
 
     @BeforeEach
-    void setUp(APIRequestContext apiRequestContext) {
+    void setUp(APIRequestContext apiRequestContext) throws IOException {
+        initOAuth2(apiRequestContext, requestOptions);
         videoJuegoRequests = new VideoJuegoRequests(apiRequestContext);
     }
 

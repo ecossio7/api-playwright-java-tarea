@@ -59,5 +59,12 @@
             <version>2.4.3</version>
         </dependency>
 
+        <!-- JsonPath: easy querying and manipulation of JSON data -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
     </dependencies>
 </project>
