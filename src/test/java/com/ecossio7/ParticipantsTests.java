@@ -1,6 +1,7 @@
 package com.ecossio7;
 
 import com.microsoft.playwright.APIRequestContext;
+import models.RParticipant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,8 +47,21 @@ public class ParticipantsTests extends BaseTest {
 
     @Test
     void getParticipantTest() {
-        apiResponse = participantsRequests.getById(5, requestOptions);
+        apiResponse = participantsRequests.getById(20, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
+        final var participant = gson.fromJson(apiResponse.text(), RParticipant.class);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(20, participant.id()),
+                () -> Assertions.assertEquals("David", participant.nombre()),
+                () -> Assertions.assertEquals("Goy", participant.apellido()),
+                () -> Assertions.assertEquals("David_Goy@yahoo.com", participant.correo()),
+                () -> Assertions.assertEquals("David_Goy", participant.usuario()),
+                () -> Assertions.assertEquals("crfm04M0JM3WeTU", participant.clave()),
+                () -> Assertions.assertEquals(210, participant.reaccion().likes()),
+                () -> Assertions.assertEquals(1533, participant.reaccion().dislikes()),
+                () -> Assertions.assertEquals("youtube", participant.plataforma())
+
+        );
     }
 
     @Test
