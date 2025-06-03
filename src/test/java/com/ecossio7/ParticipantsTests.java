@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import requests.ParticipantsRequests;
 import utilities.BaseTest;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class ParticipantsTests extends BaseTest {
     private ParticipantsRequests participantsRequests;
 
@@ -65,7 +69,7 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
-    void createParticipantTest() {
+    void createParticipantTest() throws IOException {
         String body = """
                 {
                     "nombre": "blass",
@@ -86,21 +90,8 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
-    void updateParticipantTest() {
-        String body = """
-                {
-                    "nombre": "updated-nombre",
-                    "apellido": "updated-apellido",
-                    "correo": "update@gmail.com",
-                    "usuario": "update4",
-                    "clave": "g3ajlkXrHZt6PFY",
-                    "reaccion": {
-                        "likes": 4,
-                        "dislikes": 4
-                    },
-                    "plataforma": "Administrator"
-                }
-                """;
+    void updateParticipantTest() throws IOException {
+        final var body = Files.readAllBytes(Paths.get("src/test/resources/participant.json"));
         requestOptions.setData(body);
         apiResponse = participantsRequests.update(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
