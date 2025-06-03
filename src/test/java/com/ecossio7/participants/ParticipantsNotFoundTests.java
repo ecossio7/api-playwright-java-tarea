@@ -1,5 +1,6 @@
 package com.ecossio7.participants;
 
+import Anotations.Regression;
 import com.microsoft.playwright.APIRequestContext;
 import models.RError;
 import org.junit.jupiter.api.Assertions;
@@ -22,6 +23,7 @@ public class ParticipantsNotFoundTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void getParticipantTest() {
         apiResponse = participantsRequests.getById(5000, requestOptions);
         Assertions.assertEquals(404, apiResponse.status());
@@ -31,6 +33,7 @@ public class ParticipantsNotFoundTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void updateParticipantTest() throws IOException {
         final var body = Files.readAllBytes(Paths.get("src/test/resources/participant.json"));
         requestOptions.setData(body);
@@ -41,6 +44,7 @@ public class ParticipantsNotFoundTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void partialParticipantTest() {
         String body = """
                 {
@@ -57,6 +61,7 @@ public class ParticipantsNotFoundTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void deleteParticipantTest() {
         apiResponse = participantsRequests.delete(5000, requestOptions);
         Assertions.assertEquals(404, apiResponse.status());

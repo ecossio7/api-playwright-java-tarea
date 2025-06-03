@@ -1,5 +1,6 @@
 package com.ecossio7.videojuegos;
 
+import Anotations.Regression;
 import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
 import models.RError;
@@ -23,6 +24,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void getAllVideoJuegosTest() {
         apiResponse = videoJuegoRequests.getAll(requestOptions);
         final var actualError = gson.fromJson(apiResponse.text(), RError.class);
@@ -31,6 +33,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void findVideoJuegoTest() {
         requestOptions.setQueryParam("nombre", "Pac-Man");
         apiResponse = videoJuegoRequests.getAll(requestOptions);
@@ -40,6 +43,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void sortVideoJuegosTest() {
         requestOptions.setQueryParam("sortBy", "epoca");
         requestOptions.setQueryParam("order", "asc");
@@ -50,6 +54,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void filterVideoJuegosTest() {
         requestOptions.setQueryParam("filterBy", "genero");
         requestOptions.setQueryParam("value", "comedia");
@@ -60,6 +65,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void getVideoJuegoTest() {
         apiResponse = videoJuegoRequests.getById(25, requestOptions);
         final var actualError = gson.fromJson(apiResponse.text(), RError.class);
@@ -68,6 +74,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void createVideoJuegoTest() {
         final var participant = RVideoJuego.generateVideoJuego();
         final var jsonString = gson.toJson(participant);
@@ -81,6 +88,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void updateVideoJuegoTest() throws IOException {
         final var body = Files.readAllBytes(Paths.get("src/test/resources/videoJuego.json"));
         requestOptions.setData(body);
@@ -91,6 +99,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void partialVideoJuegoTest() {
         final var body = """
                 {
@@ -109,6 +118,7 @@ public class VideoJuegosNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void deleteVideoJuegoTest() {
         apiResponse = videoJuegoRequests.delete(5, requestOptions);
         final var actualError = gson.fromJson(apiResponse.text(), RError.class);

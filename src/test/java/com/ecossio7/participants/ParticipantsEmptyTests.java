@@ -1,5 +1,6 @@
 package com.ecossio7.participants;
 
+import Anotations.Regression;
 import com.microsoft.playwright.APIRequestContext;
 import models.RError;
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +22,7 @@ public class ParticipantsEmptyTests extends BaseTest {
 
 
     @Test
+    @Regression
     void createParticipantTest() {
         final var body = "{}";
         requestOptions.setData(body);
@@ -31,6 +33,7 @@ public class ParticipantsEmptyTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void updateParticipantTest() {
         final var body = "{}";
         requestOptions.setData(body);
@@ -41,6 +44,7 @@ public class ParticipantsEmptyTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void partialParticipantTest() {
         final var body = "{}";
         requestOptions.setData(body);
