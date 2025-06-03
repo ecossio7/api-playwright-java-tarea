@@ -1,7 +1,8 @@
 package com.ecossio7;
 
+import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
-import models.VideoJuego;
+import models.RVideoJuego;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +54,7 @@ public class VideoJuegosTests extends BaseTest {
     void getVideoJuegoTest() {
         apiResponse = videoJuegoRequests.getById(25, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        final var videoJuego = gson.fromJson(apiResponse.text(), VideoJuego.class);
+        final var videoJuego = gson.fromJson(apiResponse.text(), RVideoJuego.class);
         Assertions.assertAll(
                 () -> Assertions.assertEquals(25, videoJuego.id()),
                 () -> Assertions.assertEquals("Astro Bot", videoJuego.nombre()),
@@ -66,33 +67,11 @@ public class VideoJuegosTests extends BaseTest {
 
     @Test
     void createVideoJuegoTest() {
-        final var body = """
-                {
-                    "nombre": "Ergonomic Rubber Pizza",
-                    "epoca": 2024,
-                    "precio": 296.51,
-                    "duracion": 7,
-                    "genero": "bandwidth",
-                    "empresa": {
-                        "nombre": "Hayes - Cartwright",
-                        "paginaWeb": "http://celia.org",
-                        "mision": "Borders",
-                        "direccion": {
-                            "direccion": "75189 Vilma Way",
-                            "ciudad": "Bolivia",
-                            "estado": "North Carolina",
-                            "pais": "Long Beach",
-                            "continente": "North America",
-                            "codigoPostal": "68268-3939",
-                            "coordenadas": {
-                                "latitud": -65.5507,
-                                "longitud": -15.9609
-                            }
-                        }
-                    }
-                }
-                """;
-        requestOptions.setData(body);
+        final var participant = RVideoJuego.generateVideoJuego();
+        final var jsonString = gson.toJson(participant);
+        final var jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+        jsonObject.remove(("id"));
+        requestOptions.setData(jsonObject);
         apiResponse = videoJuegoRequests.create(requestOptions);
         Assertions.assertEquals(201, apiResponse.status());
     }
