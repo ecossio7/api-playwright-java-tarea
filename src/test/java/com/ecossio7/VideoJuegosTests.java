@@ -1,6 +1,7 @@
 package com.ecossio7;
 
 import com.microsoft.playwright.APIRequestContext;
+import models.VideoJuego;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,8 +47,17 @@ public class VideoJuegosTests extends BaseTest {
 
     @Test
     void getVideoJuegoTest() {
-        apiResponse = videoJuegoRequests.getById(5, requestOptions);
+        apiResponse = videoJuegoRequests.getById(25, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
+        final var videoJuego = gson.fromJson(apiResponse.text(), VideoJuego.class);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(25, videoJuego.id()),
+                () -> Assertions.assertEquals("Astro Bot", videoJuego.nombre()),
+                () -> Assertions.assertEquals(7, videoJuego.duracion()),
+                () -> Assertions.assertEquals("https://winding-zebra.net/", videoJuego.empresa().paginaWeb()),
+                () -> Assertions.assertEquals("64902-8286", videoJuego.empresa().direccion().codigoPostal()),
+                () -> Assertions.assertEquals(108.22, videoJuego.empresa().direccion().coordenadas().latitud())
+        );
     }
 
     @Test
