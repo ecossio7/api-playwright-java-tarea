@@ -1,4 +1,4 @@
-package com.ecossio7;
+package com.ecossio7.videojuegos;
 
 import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
