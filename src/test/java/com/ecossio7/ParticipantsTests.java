@@ -17,7 +17,8 @@ public class ParticipantsTests extends BaseTest {
     private ParticipantsRequests participantsRequests;
 
     @BeforeEach
-    void setUp(APIRequestContext apiRequestContext) {
+    void setUp(APIRequestContext apiRequestContext) throws IOException {
+        initOAuth2(apiRequestContext, requestOptions);
         participantsRequests = new ParticipantsRequests(apiRequestContext);
     }
 

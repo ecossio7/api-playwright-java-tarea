@@ -13,7 +13,7 @@ public class CustomOptions implements OptionsFactory {
      */
     @Override
     public Options getOptions() {
-        APIRequest.NewContextOptions apiRequestOptions = buildApiRequestOptions();
+        APIRequest.NewContextOptions apiRequestOptions = buildApiRequestOptionsOAuth2();
 
         // Create Options object and set the prepared API request options
         Options options = new Options();
@@ -36,5 +36,11 @@ public class CustomOptions implements OptionsFactory {
         requestOptions.setExtraHTTPHeaders(Map.of("Content-Type", "application/json"));
 
         return requestOptions;
+    }
+
+    private APIRequest.NewContextOptions buildApiRequestOptionsOAuth2() {
+        APIRequest.NewContextOptions options = new APIRequest.NewContextOptions();
+        options.setBaseURL("http://127.0.0.1:3000/auth/");
+        return options;
     }
 }
