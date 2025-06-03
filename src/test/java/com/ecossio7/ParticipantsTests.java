@@ -1,5 +1,6 @@
 package com.ecossio7;
 
+import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
 import models.RParticipant;
 import org.junit.jupiter.api.Assertions;
@@ -70,21 +71,12 @@ public class ParticipantsTests extends BaseTest {
 
     @Test
     void createParticipantTest() throws IOException {
-        String body = """
-                {
-                    "nombre": "blass",
-                    "apellido": "Jakubowski",
-                    "correo": "Moriah59@gmail.com",
-                    "usuario": "blass4",
-                    "clave": "g3ajlkXrHZt6PFY",
-                    "reaccion": {
-                        "likes": 418,
-                        "dislikes": 143
-                    },
-                    "plataforma": "Administrator"
-                }
-                """;
-        requestOptions.setData(body);
+        final var participant = RParticipant.generateRParticipant();
+        final var jsonString = gson.toJson(participant);
+        final var jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+        jsonObject.remove(("id"));
+
+        requestOptions.setData(jsonObject);
         apiResponse = participantsRequests.create(requestOptions);
         Assertions.assertEquals(201, apiResponse.status());
     }
