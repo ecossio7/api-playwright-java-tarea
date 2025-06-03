@@ -1,5 +1,6 @@
 package com.ecossio7.participants;
 
+import Anotations.Regression;
 import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
 import models.RError;
@@ -23,6 +24,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void getAllParticipantsTest() {
         apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
@@ -31,6 +33,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void findParticipantTest() {
         requestOptions.setQueryParam("nombre", "Will");
         apiResponse = participantsRequests.getAll(requestOptions);
@@ -40,6 +43,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void sortParticipantsTest() {
         requestOptions.setQueryParam("sortBy", "dislikes");
         requestOptions.setQueryParam("order", "asc");
@@ -50,6 +54,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void filterParticipantsTest() {
         requestOptions.setQueryParam("filterBy", "plataforma");
         requestOptions.setQueryParam("value", "tiktok");
@@ -60,6 +65,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void getParticipantTest() {
         apiResponse = participantsRequests.getById(20, requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
@@ -68,6 +74,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void createParticipantTest() {
         final var participant = RParticipant.generateRParticipant();
         final var jsonString = gson.toJson(participant);
@@ -82,6 +89,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void updateParticipantTest() throws IOException {
         final var body = Files.readAllBytes(Paths.get("src/test/resources/participant.json"));
         requestOptions.setData(body);
@@ -92,6 +100,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void partialParticipantTest() {
         String body = """
                 {
@@ -108,6 +117,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void deleteParticipantTest() {
         apiResponse = participantsRequests.delete(5, requestOptions);
         Assertions.assertEquals(401, apiResponse.status());

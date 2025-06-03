@@ -1,70 +1,99 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.ecossio7</groupId>
-    <artifactId>api-playwright-java-tarea</artifactId>
+    <groupId>org.example</groupId>
+    <artifactId>PlaywrightAPIJava</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
-    <name>api-playwright-java-tarea</name>
-    <url>http://maven.apache.org</url>
-
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <aspectj.version>1.9.8</aspectj.version>
     </properties>
+    <build>
+        <plugins>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <allure.results.directory>target/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <parallel>methods</parallel>
+                    <threadCount>5</threadCount>
+                </configuration>
+                <dependencies>
+                    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!--  https://github.com/allure-framework/allure-maven/releases -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.15.2</version>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.13.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.24.3</version>
-        </dependency>
-        <!-- SLF4J to Log4j2 bridge -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j2-impl</artifactId>
-            <version>2.24.3</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.13.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.microsoft.playwright/playwright -->
-        <dependency>
-            <groupId>com.microsoft.playwright</groupId>
-            <artifactId>playwright</artifactId>
-            <version>1.52.0</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/net.datafaker/datafaker -->
         <dependency>
             <groupId>net.datafaker</groupId>
             <artifactId>datafaker</artifactId>
             <version>2.4.3</version>
         </dependency>
-
-        <!-- JsonPath: easy querying and manipulation of JSON data -->
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.24.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit5 -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>2.29.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.17</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.playwright/playwright -->
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>1.51.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path -->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
             <version>2.9.0</version>
         </dependency>
-
     </dependencies>
+
 </project>
+
+        <!--        Notas de cada dependencia:-->
+        <!--        Log4j: Para registrar eventos y errores en tu aplicación.-->
+        <!--        Allure JUnit5: Para generar reportes visuales interactivos de pruebas automatizadas.-->
+        <!--        SLF4J Simple: Para simplificar el proceso de logging en aplicaciones.-->
+        <!--        Playwright: Para automatizar pruebas de aplicaciones web con soporte para múltiples navegadores.-->
+        <!--        JsonPath: Para realizar consultas y manipular datos de JSON de manera eficiente.-->

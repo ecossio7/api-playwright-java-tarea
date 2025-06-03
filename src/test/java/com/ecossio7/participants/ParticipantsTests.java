@@ -1,5 +1,7 @@
 package com.ecossio7.participants;
 
+import Anotations.Regression;
+import Anotations.Smoke;
 import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
 import models.RParticipant;
@@ -23,12 +25,16 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void getAllParticipantsTest() {
         apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
     }
 
     @Test
+    @Regression
+    @Smoke
     void findParticipantTest() {
         requestOptions.setQueryParam("nombre", "Will");
         apiResponse = participantsRequests.getAll(requestOptions);
@@ -36,6 +42,8 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void sortParticipantsTest() {
         requestOptions.setQueryParam("sortBy", "dislikes");
         requestOptions.setQueryParam("order", "asc");
@@ -44,6 +52,8 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void filterParticipantsTest() {
         requestOptions.setQueryParam("filterBy", "plataforma");
         requestOptions.setQueryParam("value", "tiktok");
@@ -52,6 +62,8 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void getParticipantTest() {
         apiResponse = participantsRequests.getById(20, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
@@ -71,6 +83,8 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void createParticipantTest() throws IOException {
         final var participant = RParticipant.generateRParticipant();
         final var jsonString = gson.toJson(participant);
@@ -83,6 +97,8 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void updateParticipantTest() throws IOException {
         final var body = Files.readAllBytes(Paths.get("src/test/resources/participant.json"));
         requestOptions.setData(body);
@@ -91,6 +107,8 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void partialParticipantTest() {
         String body = """
                 {
@@ -105,6 +123,8 @@ public class ParticipantsTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void deleteParticipantTest() {
         apiResponse = participantsRequests.delete(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());

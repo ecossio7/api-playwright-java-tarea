@@ -1,5 +1,6 @@
 package com.ecossio7.videojuegos;
 
+import Anotations.Regression;
 import com.microsoft.playwright.APIRequestContext;
 import models.RError;
 import org.junit.jupiter.api.Assertions;
@@ -22,6 +23,7 @@ public class VideoJuegosNotFoundTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void getVideoJuegoTest() {
         apiResponse = videoJuegoRequests.getById(5000, requestOptions);
         final var actualError = gson.fromJson(apiResponse.text(), RError.class);
@@ -31,6 +33,7 @@ public class VideoJuegosNotFoundTests extends BaseTest {
 
 
     @Test
+    @Regression
     void updateVideoJuegoTest() throws IOException {
         final var body = Files.readAllBytes(Paths.get("src/test/resources/videoJuego.json"));
         requestOptions.setData(body);
@@ -41,6 +44,7 @@ public class VideoJuegosNotFoundTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void partialVideoJuegoTest() {
         final var body = """
                 {
@@ -59,6 +63,7 @@ public class VideoJuegosNotFoundTests extends BaseTest {
     }
 
     @Test
+    @Regression
     void deleteVideoJuegoTest() {
         apiResponse = videoJuegoRequests.delete(5000, requestOptions);
         final var actualError = gson.fromJson(apiResponse.text(), RError.class);

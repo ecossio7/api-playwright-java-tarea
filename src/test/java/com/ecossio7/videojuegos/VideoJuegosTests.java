@@ -1,5 +1,7 @@
 package com.ecossio7.videojuegos;
 
+import Anotations.Regression;
+import Anotations.Smoke;
 import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
 import models.RVideoJuego;
@@ -23,12 +25,16 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void getAllVideoJuegosTest() {
         apiResponse = videoJuegoRequests.getAll(requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
     }
 
     @Test
+    @Regression
+    @Smoke
     void findVideoJuegoTest() {
         requestOptions.setQueryParam("nombre", "Pac-Man");
         apiResponse = videoJuegoRequests.getAll(requestOptions);
@@ -36,6 +42,8 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void sortVideoJuegosTest() {
         requestOptions.setQueryParam("sortBy", "epoca");
         requestOptions.setQueryParam("order", "asc");
@@ -44,6 +52,8 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void filterVideoJuegosTest() {
         requestOptions.setQueryParam("filterBy", "genero");
         requestOptions.setQueryParam("value", "comedia");
@@ -52,6 +62,8 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void getVideoJuegoTest() {
         apiResponse = videoJuegoRequests.getById(25, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
@@ -67,6 +79,8 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void createVideoJuegoTest() {
         final var participant = RVideoJuego.generateVideoJuego();
         final var jsonString = gson.toJson(participant);
@@ -78,6 +92,8 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void updateVideoJuegoTest() throws IOException {
         final var body = Files.readAllBytes(Paths.get("src/test/resources/videoJuego.json"));
         requestOptions.setData(body);
@@ -86,6 +102,8 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void partialVideoJuegoTest() {
         final var body = """
                 {
@@ -102,6 +120,8 @@ public class VideoJuegosTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     void deleteVideoJuegoTest() {
         apiResponse = videoJuegoRequests.delete(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
