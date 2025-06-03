@@ -2,56 +2,56 @@ package com.ecossio7;
 
 import com.microsoft.playwright.APIRequestContext;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utilities.ApiLogger;
+import requests.VideoJuegoRequests;
 import utilities.BaseTest;
 
 public class VideoJuegosTests extends BaseTest {
-    private static final String VIDEOGAMES_ENDPOINT = "videojuegos";
-    private static final String SELECTED_ID = "/25";
+    private VideoJuegoRequests videoJuegoRequests;
 
-    @Test
-    void getAllVideoJuegosTest(APIRequestContext apiRequestContext) {
-        apiResponse = apiRequestContext.get(VIDEOGAMES_ENDPOINT);
-        Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
+    @BeforeEach
+    void setUp(APIRequestContext apiRequestContext) {
+        videoJuegoRequests = new VideoJuegoRequests(apiRequestContext);
     }
 
     @Test
-    void findVideoJuegoTest(APIRequestContext apiRequestContext) {
+    void getAllVideoJuegosTest() {
+        apiResponse = videoJuegoRequests.getAll(requestOptions);
+        Assertions.assertEquals(200, apiResponse.status());
+    }
+
+    @Test
+    void findVideoJuegoTest() {
         requestOptions.setQueryParam("nombre", "Pac-Man");
-        apiResponse = apiRequestContext.get(VIDEOGAMES_ENDPOINT, requestOptions);
+        apiResponse = videoJuegoRequests.getAll(requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
     }
 
     @Test
-    void sortVideoJuegosTest(APIRequestContext apiRequestContext) {
+    void sortVideoJuegosTest() {
         requestOptions.setQueryParam("sortBy", "epoca");
         requestOptions.setQueryParam("order", "asc");
-        apiResponse = apiRequestContext.get(VIDEOGAMES_ENDPOINT, requestOptions);
+        apiResponse = videoJuegoRequests.getAll(requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
     }
 
     @Test
-    void filterVideoJuegosTest(APIRequestContext apiRequestContext) {
+    void filterVideoJuegosTest() {
         requestOptions.setQueryParam("filterBy", "genero");
         requestOptions.setQueryParam("value", "comedia");
-        apiResponse = apiRequestContext.get(VIDEOGAMES_ENDPOINT, requestOptions);
+        apiResponse = videoJuegoRequests.getAll(requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
     }
 
     @Test
-    void getVideoJuegoTest(APIRequestContext apiRequestContext) {
-        apiResponse = apiRequestContext.get(VIDEOGAMES_ENDPOINT + SELECTED_ID);
+    void getVideoJuegoTest() {
+        apiResponse = videoJuegoRequests.getById(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
     }
 
     @Test
-    void createVideoJuegoTest(APIRequestContext apiRequestContext) {
+    void createVideoJuegoTest() {
         final var body = """
                 {
                     "nombre": "Ergonomic Rubber Pizza",
@@ -79,13 +79,12 @@ public class VideoJuegosTests extends BaseTest {
                 }
                 """;
         requestOptions.setData(body);
-        apiResponse = apiRequestContext.post(VIDEOGAMES_ENDPOINT, requestOptions);
+        apiResponse = videoJuegoRequests.create(requestOptions);
         Assertions.assertEquals(201, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.POST);
     }
 
     @Test
-    void updateVideoJuegoTest(APIRequestContext apiRequestContext) {
+    void updateVideoJuegoTest() {
         final var body = """
                 {
                      "nombre": "update-blass",
@@ -113,13 +112,12 @@ public class VideoJuegosTests extends BaseTest {
                  }
                 """;
         requestOptions.setData(body);
-        apiResponse = apiRequestContext.put(VIDEOGAMES_ENDPOINT + SELECTED_ID, requestOptions);
+        apiResponse = videoJuegoRequests.update(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.PUT);
     }
 
     @Test
-    void partialVideoJuegoTest(APIRequestContext apiRequestContext) {
+    void partialVideoJuegoTest() {
         final var body = """
                 {
                     "nombre": "partial-Blass",
@@ -130,15 +128,13 @@ public class VideoJuegosTests extends BaseTest {
                 }
                 """;
         requestOptions.setData(body);
-        apiResponse = apiRequestContext.patch(VIDEOGAMES_ENDPOINT + SELECTED_ID, requestOptions);
+        apiResponse = videoJuegoRequests.partialUpdate(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.PATCH);
     }
 
     @Test
-    void deleteVideoJuegoTest(APIRequestContext apiRequestContext) {
-        apiResponse = apiRequestContext.delete(VIDEOGAMES_ENDPOINT + SELECTED_ID);
+    void deleteVideoJuegoTest() {
+        apiResponse = videoJuegoRequests.delete(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.DELETE);
     }
 }
