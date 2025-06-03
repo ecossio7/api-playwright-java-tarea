@@ -2,56 +2,56 @@ package com.ecossio7;
 
 import com.microsoft.playwright.APIRequestContext;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utilities.ApiLogger;
+import requests.ParticipantsRequests;
 import utilities.BaseTest;
 
 public class ParticipantsTests extends BaseTest {
-    private static final String PARTICIPANTS_ENDPOINT = "participantes";
-    private static final String SELECTED_ID = "/5";
+    private ParticipantsRequests participantsRequests;
 
-    @Test
-    void getAllParticipantsTest(APIRequestContext apiRequestContext) {
-        apiResponse = apiRequestContext.get(PARTICIPANTS_ENDPOINT);
-        Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
+    @BeforeEach
+    void setUp(APIRequestContext apiRequestContext) {
+        participantsRequests = new ParticipantsRequests(apiRequestContext);
     }
 
     @Test
-    void findParticipantTest(APIRequestContext apiRequestContext) {
+    void getAllParticipantsTest() {
+        apiResponse = participantsRequests.getAll(requestOptions);
+        Assertions.assertEquals(200, apiResponse.status());
+    }
+
+    @Test
+    void findParticipantTest() {
         requestOptions.setQueryParam("nombre", "Will");
-        apiResponse = apiRequestContext.get(PARTICIPANTS_ENDPOINT, requestOptions);
+        apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
     }
 
     @Test
-    void sortParticipantsTest(APIRequestContext apiRequestContext) {
+    void sortParticipantsTest() {
         requestOptions.setQueryParam("sortBy", "dislikes");
         requestOptions.setQueryParam("order", "asc");
-        apiResponse = apiRequestContext.get(PARTICIPANTS_ENDPOINT, requestOptions);
+        apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
     }
 
     @Test
-    void filterParticipantsTest(APIRequestContext apiRequestContext) {
+    void filterParticipantsTest() {
         requestOptions.setQueryParam("filterBy", "plataforma");
         requestOptions.setQueryParam("value", "tiktok");
-        apiResponse = apiRequestContext.get(PARTICIPANTS_ENDPOINT, requestOptions);
+        apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
     }
 
     @Test
-    void getParticipantTest(APIRequestContext apiRequestContext) {
-        apiResponse = apiRequestContext.get(PARTICIPANTS_ENDPOINT + SELECTED_ID);
+    void getParticipantTest() {
+        apiResponse = participantsRequests.getById(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.GET);
     }
 
     @Test
-    void createParticipantTest(APIRequestContext apiRequestContext) {
+    void createParticipantTest() {
         String body = """
                 {
                     "nombre": "blass",
@@ -67,13 +67,12 @@ public class ParticipantsTests extends BaseTest {
                 }
                 """;
         requestOptions.setData(body);
-        apiResponse = apiRequestContext.post(PARTICIPANTS_ENDPOINT, requestOptions);
+        apiResponse = participantsRequests.create(requestOptions);
         Assertions.assertEquals(201, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.POST);
     }
 
     @Test
-    void updateParticipantTest(APIRequestContext apiRequestContext) {
+    void updateParticipantTest() {
         String body = """
                 {
                     "nombre": "updated-nombre",
@@ -89,13 +88,12 @@ public class ParticipantsTests extends BaseTest {
                 }
                 """;
         requestOptions.setData(body);
-        apiResponse = apiRequestContext.put(PARTICIPANTS_ENDPOINT + SELECTED_ID, requestOptions);
+        apiResponse = participantsRequests.update(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.PUT);
     }
 
     @Test
-    void partialParticipantTest(APIRequestContext apiRequestContext) {
+    void partialParticipantTest() {
         String body = """
                 {
                     "nombre": "partial-updated-nombre",
@@ -104,15 +102,13 @@ public class ParticipantsTests extends BaseTest {
                 }
                 """;
         requestOptions.setData(body);
-        apiResponse = apiRequestContext.patch(PARTICIPANTS_ENDPOINT + SELECTED_ID, requestOptions);
+        apiResponse = participantsRequests.partialUpdate(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.PATCH);
     }
 
     @Test
-    void deleteParticipantTest(APIRequestContext apiRequestContext) {
-        apiResponse = apiRequestContext.delete(PARTICIPANTS_ENDPOINT + SELECTED_ID);
+    void deleteParticipantTest() {
+        apiResponse = participantsRequests.delete(5, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        ApiLogger.logApi(apiResponse, Method.DELETE);
     }
 }
