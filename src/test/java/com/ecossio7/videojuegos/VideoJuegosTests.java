@@ -1,10 +1,10 @@
 package com.ecossio7.videojuegos;
 
-import Anotations.Regression;
-import Anotations.Smoke;
+import anotations.Regression;
+import anotations.Smoke;
 import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
-import models.RVideoJuego;
+import models.VideoJuego;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,7 +67,7 @@ public class VideoJuegosTests extends BaseTest {
     void getVideoJuegoTest() {
         apiResponse = videoJuegoRequests.getById(25, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        final var videoJuego = gson.fromJson(apiResponse.text(), RVideoJuego.class);
+        final var videoJuego = gson.fromJson(apiResponse.text(), VideoJuego.class);
         Assertions.assertAll(
                 () -> Assertions.assertEquals(25, videoJuego.id()),
                 () -> Assertions.assertEquals("Astro Bot", videoJuego.nombre()),
@@ -82,7 +82,7 @@ public class VideoJuegosTests extends BaseTest {
     @Regression
     @Smoke
     void createVideoJuegoTest() {
-        final var participant = RVideoJuego.generateVideoJuego();
+        final var participant = VideoJuego.generateVideoJuego();
         final var jsonString = gson.toJson(participant);
         final var jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
         jsonObject.remove(("id"));

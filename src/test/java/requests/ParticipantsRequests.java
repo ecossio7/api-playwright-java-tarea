@@ -22,7 +22,8 @@ public class ParticipantsRequests extends BaseRequest {
 
     @Step("(GET) Get participant by ID")
     public APIResponse getById(int id, RequestOptions requestOptions) {
-        apiResponse = apiRequestContext.get("participantes/" + id, requestOptions);
+        final var endpoint = String.format("participantes/%d", id);
+        apiResponse = apiRequestContext.get(endpoint, requestOptions);
         ApiLogger.logApi(apiResponse, Method.GET);
         return apiResponse;
     }
@@ -36,21 +37,24 @@ public class ParticipantsRequests extends BaseRequest {
 
     @Step("(PUT) Update participant")
     public APIResponse update(int id, RequestOptions requestOptions) {
-        apiResponse = apiRequestContext.put("participantes/" + id, requestOptions);
+        final var endpoint = String.format("participantes/%d", id);
+        apiResponse = apiRequestContext.put(endpoint, requestOptions);
         ApiLogger.logApi(apiResponse, Method.PUT);
         return apiResponse;
     }
 
     @Step("(PATCH) Partial update participant")
     public APIResponse partialUpdate(int id, RequestOptions requestOptions) {
-        apiResponse = apiRequestContext.patch("participantes/" + id, requestOptions);
+        final var endpoint = String.format("participantes/%d", id);
+        apiResponse = apiRequestContext.patch(endpoint, requestOptions);
         ApiLogger.logApi(apiResponse, Method.PATCH);
         return apiResponse;
     }
 
     @Step("(DELETE) Delete participant")
     public APIResponse delete(int id, RequestOptions requestOptions) {
-        apiResponse = apiRequestContext.delete("participantes/" + id, requestOptions);
+        final var endpoint = String.format("participantes/%d", id);
+        apiResponse = apiRequestContext.delete(endpoint, requestOptions);
         ApiLogger.logApi(apiResponse, Method.DELETE);
         return apiResponse;
     }

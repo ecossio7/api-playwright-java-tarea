@@ -1,11 +1,11 @@
-package Anotations;
+package anotations;
 
 import org.junit.jupiter.api.Tag;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-@Tag("regression")
+@Tag("smoke")
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface Regression {
+public @interface Smoke {
 }

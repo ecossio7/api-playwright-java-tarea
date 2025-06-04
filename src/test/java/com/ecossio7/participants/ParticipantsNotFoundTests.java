@@ -1,8 +1,8 @@
 package com.ecossio7.participants;
 
-import Anotations.Regression;
+import anotations.Regression;
 import com.microsoft.playwright.APIRequestContext;
-import models.RError;
+import models.Error;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ public class ParticipantsNotFoundTests extends BaseTest {
     void getParticipantTest() {
         apiResponse = participantsRequests.getById(5000, requestOptions);
         Assertions.assertEquals(404, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("Participante con id 5000 no encontrado", error.mensaje());
 
     }
@@ -39,7 +39,7 @@ public class ParticipantsNotFoundTests extends BaseTest {
         requestOptions.setData(body);
         apiResponse = participantsRequests.update(5000, requestOptions);
         Assertions.assertEquals(404, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("Participante con id 5000 no encontrado", error.mensaje());
     }
 
@@ -56,7 +56,7 @@ public class ParticipantsNotFoundTests extends BaseTest {
         requestOptions.setData(body);
         apiResponse = participantsRequests.partialUpdate(5000, requestOptions);
         Assertions.assertEquals(404, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("Participante con id 5000 no encontrado", error.mensaje());
     }
 
@@ -65,7 +65,7 @@ public class ParticipantsNotFoundTests extends BaseTest {
     void deleteParticipantTest() {
         apiResponse = participantsRequests.delete(5000, requestOptions);
         Assertions.assertEquals(404, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("Participante con id 5000 no encontrado", error.mensaje());
     }
 }
