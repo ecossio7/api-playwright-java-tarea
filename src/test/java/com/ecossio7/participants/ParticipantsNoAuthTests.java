@@ -1,10 +1,10 @@
 package com.ecossio7.participants;
 
-import Anotations.Regression;
+import anotations.Regression;
 import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
-import models.RError;
-import models.RParticipant;
+import models.Error;
+import models.Participant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     void getAllParticipantsTest() {
         apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 
@@ -38,7 +38,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
         requestOptions.setQueryParam("nombre", "Will");
         apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 
@@ -49,7 +49,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
         requestOptions.setQueryParam("order", "asc");
         apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 
@@ -60,7 +60,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
         requestOptions.setQueryParam("value", "tiktok");
         apiResponse = participantsRequests.getAll(requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 
@@ -69,14 +69,14 @@ public class ParticipantsNoAuthTests extends BaseTest {
     void getParticipantTest() {
         apiResponse = participantsRequests.getById(20, requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 
     @Test
     @Regression
     void createParticipantTest() {
-        final var participant = RParticipant.generateRParticipant();
+        final var participant = Participant.generateRParticipant();
         final var jsonString = gson.toJson(participant);
         final var jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
         jsonObject.remove(("id"));
@@ -84,7 +84,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
         requestOptions.setData(jsonObject);
         apiResponse = participantsRequests.create(requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 
@@ -95,7 +95,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
         requestOptions.setData(body);
         apiResponse = participantsRequests.update(5, requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 
@@ -112,7 +112,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
         requestOptions.setData(body);
         apiResponse = participantsRequests.partialUpdate(5, requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 
@@ -121,7 +121,7 @@ public class ParticipantsNoAuthTests extends BaseTest {
     void deleteParticipantTest() {
         apiResponse = participantsRequests.delete(5, requestOptions);
         Assertions.assertEquals(401, apiResponse.status());
-        final var error = gson.fromJson(apiResponse.text(), RError.class);
+        final var error = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("No autorizado", error.mensaje());
     }
 }

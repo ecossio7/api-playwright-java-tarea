@@ -1,10 +1,10 @@
 package com.ecossio7.participants;
 
-import Anotations.Regression;
-import Anotations.Smoke;
+import anotations.Regression;
+import anotations.Smoke;
 import com.google.gson.JsonParser;
 import com.microsoft.playwright.APIRequestContext;
-import models.RParticipant;
+import models.Participant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,7 +67,7 @@ public class ParticipantsTests extends BaseTest {
     void getParticipantTest() {
         apiResponse = participantsRequests.getById(20, requestOptions);
         Assertions.assertEquals(200, apiResponse.status());
-        final var participant = gson.fromJson(apiResponse.text(), RParticipant.class);
+        final var participant = gson.fromJson(apiResponse.text(), Participant.class);
         Assertions.assertAll(
                 () -> Assertions.assertEquals(20, participant.id()),
                 () -> Assertions.assertEquals("David", participant.nombre()),
@@ -86,7 +86,7 @@ public class ParticipantsTests extends BaseTest {
     @Regression
     @Smoke
     void createParticipantTest() throws IOException {
-        final var participant = RParticipant.generateRParticipant();
+        final var participant = Participant.generateRParticipant();
         final var jsonString = gson.toJson(participant);
         final var jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
         jsonObject.remove(("id"));
@@ -110,7 +110,7 @@ public class ParticipantsTests extends BaseTest {
     @Regression
     @Smoke
     void partialParticipantTest() {
-        String body = """
+        final var body = """
                 {
                     "nombre": "partial-updated-nombre",
                     "apellido": "partial-updated-apellido",

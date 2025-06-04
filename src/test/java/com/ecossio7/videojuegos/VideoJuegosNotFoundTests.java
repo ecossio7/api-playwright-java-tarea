@@ -1,8 +1,8 @@
 package com.ecossio7.videojuegos;
 
-import Anotations.Regression;
+import anotations.Regression;
 import com.microsoft.playwright.APIRequestContext;
-import models.RError;
+import models.Error;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,8 @@ public class VideoJuegosNotFoundTests extends BaseTest {
     @Regression
     void getVideoJuegoTest() {
         apiResponse = videoJuegoRequests.getById(5000, requestOptions);
-        final var actualError = gson.fromJson(apiResponse.text(), RError.class);
         Assertions.assertEquals(404, apiResponse.status());
+        final var actualError = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("Videojuego con id 5000 no encontrado", actualError.mensaje());
     }
 
@@ -38,8 +38,8 @@ public class VideoJuegosNotFoundTests extends BaseTest {
         final var body = Files.readAllBytes(Paths.get("src/test/resources/videoJuego.json"));
         requestOptions.setData(body);
         apiResponse = videoJuegoRequests.update(5000, requestOptions);
-        final var actualError = gson.fromJson(apiResponse.text(), RError.class);
         Assertions.assertEquals(404, apiResponse.status());
+        final var actualError = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("Videojuego con id 5000 no encontrado", actualError.mensaje());
     }
 
@@ -57,8 +57,8 @@ public class VideoJuegosNotFoundTests extends BaseTest {
                 """;
         requestOptions.setData(body);
         apiResponse = videoJuegoRequests.partialUpdate(5000, requestOptions);
-        final var actualError = gson.fromJson(apiResponse.text(), RError.class);
         Assertions.assertEquals(404, apiResponse.status());
+        final var actualError = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("Videojuego con id 5000 no encontrado", actualError.mensaje());
     }
 
@@ -66,8 +66,8 @@ public class VideoJuegosNotFoundTests extends BaseTest {
     @Regression
     void deleteVideoJuegoTest() {
         apiResponse = videoJuegoRequests.delete(5000, requestOptions);
-        final var actualError = gson.fromJson(apiResponse.text(), RError.class);
         Assertions.assertEquals(404, apiResponse.status());
+        final var actualError = gson.fromJson(apiResponse.text(), Error.class);
         Assertions.assertEquals("Videojuego con id 5000 no encontrado", actualError.mensaje());
     }
 }

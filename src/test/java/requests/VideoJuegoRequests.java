@@ -22,7 +22,8 @@ public class VideoJuegoRequests extends BaseRequest {
 
     @Step("(GET) Get video game by ID")
     public APIResponse getById(int id, RequestOptions requestOptions) {
-        apiResponse = apiRequestContext.get("videojuegos/" + id, requestOptions);
+        final var endpoint = String.format("videojuegos/%d", id);
+        apiResponse = apiRequestContext.get(endpoint, requestOptions);
         ApiLogger.logApi(apiResponse, Method.GET);
         return apiResponse;
     }
@@ -36,21 +37,24 @@ public class VideoJuegoRequests extends BaseRequest {
 
     @Step("(PUT) Update video game")
     public APIResponse update(int id, RequestOptions requestOptions) {
-        apiResponse = apiRequestContext.put("videojuegos/" + id, requestOptions);
+        final var endpoint = String.format("videojuegos/%d", id);
+        apiResponse = apiRequestContext.put(endpoint, requestOptions);
         ApiLogger.logApi(apiResponse, Method.PUT);
         return apiResponse;
     }
 
     @Step("(PATCH) Partial update video game")
     public APIResponse partialUpdate(int id, RequestOptions requestOptions) {
-        apiResponse = apiRequestContext.patch("videojuegos/" + id, requestOptions);
+        final var endpoint = String.format("videojuegos/%d", id);
+        apiResponse = apiRequestContext.patch(endpoint, requestOptions);
         ApiLogger.logApi(apiResponse, Method.PATCH);
         return apiResponse;
     }
 
     @Step("(DELETE) Delete video game")
     public APIResponse delete(int id, RequestOptions requestOptions) {
-        apiResponse = apiRequestContext.delete("videojuegos/" + id, requestOptions);
+        final var endpoint = String.format("videojuegos/%d", id);
+        apiResponse = apiRequestContext.delete(endpoint, requestOptions);
         ApiLogger.logApi(apiResponse, Method.DELETE);
         return apiResponse;
     }
